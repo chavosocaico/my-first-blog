@@ -1,0 +1,83 @@
+{% extends 'app/base.html' %}
+
+{% block corpo %}
+
+
+<h1>Reservas</h1>
+{% if material %}
+<table class="responsive-table striped centered">
+	
+
+	<thead>
+		<tr>
+		    <th data-field="processo">Material</th>
+		    <th data-field="processo">Usuário</th>
+			<th data-field="processo">Status</th>
+			<th data-field="processo">Ações</th>
+		</tr>
+
+
+	</thead>
+
+	<tbody>
+
+		{% for m in material %}
+		<tr>
+			<td>{{m.material}}</td>
+			<td>{{s.usuario}}</td>
+			<td>{{m.status}}</td>
+     		<td><a class="waves-effect waves-light btn modal-trigger" href="#material{{m.id}}">Detalhar</a></td>
+			<div id="material{{m.id}}" class="modal modal-fixed-footer">
+	    		<div class="modal-content">
+		    		<div class="row">
+			      		<h4>Detalhes</h4>
+			      		<p class="c">Nome: {{m.material}}</p>
+			      		<p>Horáro de início: {{m.horario_de_Entrada}}</p>
+			      		<p>Horário de térmono: {{m.horario_de_Saida}}</p>
+			      		<p>Hora de requisição: {{m.dataHora_Atual}}</p>
+			      		<p>Justificativa: {{m.justificativa}}</p>
+		    		</div>
+		    	</div>
+		    	<div class="modal-footer">	
+		    		{% if m.status == 'Aguardando'%}
+						<a href="{% url 'cancelar_reserva_material' pk=m.id %}" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar Reserva</a>
+						{% if request.user.is_staff %}
+							<a href="{% url 'deferir_reserva_material' pk=m.id %}" class="modal-action modal-close waves-effect waves-green btn-flat">Deferir</a>
+							<a href="{% url 'indeferir_reserva_material' pk=m.id %}" class="modal-action modal-close waves-effect waves-red btn-flat">Indeferir</a>
+							<a class="modal-action modal-close waves-effect waves-red btn-flat">Fechar</a>
+						{% endif %}
+
+					{% else %}
+		     		<a class="modal-action modal-close waves-effect waves-red btn-flat">Fechar</a>
+		     		{% endif %}
+	    		</div>
+
+	    	</div>
+
+
+
+
+
+		</tr>
+
+
+
+		{% endfor %}
+	</tbody>
+
+</table>
+
+{% else %}
+	<h4>Você não possui reservas</h4>
+{% endif %}
+<br/>
+<div>
+	<a href="{% url 'listar_materiais' %}" class="waves-effect waves-light btn right">Nova reserva</a>
+</div>
+
+<script type="text/javascript">$(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+ </script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'app/base.html' %}
+	{% block corpo %}
+		<h1>Nova Sala</h1>
+			<form method="POST" class="post-form">{% csrf_token %}
+				{{ form.as_p }}
+
+				<button type="submit" class="save btn btn-default">Salvar</button>
+
+			</form>
+	{% endblock %}

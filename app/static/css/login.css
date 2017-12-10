@@ -1,0 +1,17 @@
+   .cx{
+      background: #FFFFFF;
+      border-radius: 5%;
+      border:solid 0.5px ;
+      padding: 3%;
+      margin-top: 8%;
+      box-shadow: #A9A9A9 0.5em 0.5em 0.3em;
+    }
+
+    body{
+      background-color: #778899;
+
+    }
+
+.neg{
+  font-weight: bold; 
+}

@@ -1,0 +1,104 @@
+{% extends 'app/base.html' %}
+
+{% block corpo %}
+
+
+<h1>Materiais</h1>
+
+{% if material %}
+<table class="responsive-table striped centered">
+	
+
+	<thead> 
+		<tr>
+			<th data-field="processo">Nome</th>
+			<th data-field="processo">localização</th>
+			<th data-field="processo">Número</th>
+			<th data-field="processo" colspan="2">Ações</th>
+		</tr>
+
+		
+	</thead>
+
+	<tbody>
+		
+		{% for m in material %}
+		<tr>
+			<td>{{m.nome}}</td>
+			<td>{{m.localizacao}}</td>
+			<td>{{m.numero}}</td>
+			<td><a class="waves-effect waves-light btn modal-trigger" href="#material{{m.id}}">Detalhar</a></td>
+			<div id="material{{m.id}}" class="modal modal-fixed-footer">
+	    		<div class="modal-content">
+		    		<div class="row">
+		    			{% if request.user.is_staff %}
+		    			<a href="{%url 'apagar_materiais' pk=m.id%}" onclick="Materialize.toast('Material apagado!!!', 4000)" >  <i class=" small material-icons  red-text right ">delete</i> </a>
+		    			<a href="{% url 'editar_material' pk=m.id%}"><i class="small material-icons  green-text right">create</i></a>
+		    			{% endif %}
+		    			 
+			      		<h4>Detalhes</h4>
+			      		<p class="c">Nome: {{m.nome}}</p>
+			      		<p>Localização: {{m.localizacao}}</p>
+			      		<p>Número: {{m.numero}}</p>
+			      		<div class="col s12 m4 center">
+			      			<h5>Manhã</h5>
+			      			<p>07:00 - 07:45:{{m.h1_Matutino}}</p>
+							<p>07:45 - 08:30:{{m.h2_Matutino}}</p>
+							<p>08:50 - 09:35:{{m.h3_Matutino}}</p>
+							<p>09:35 - 10:20:{{m.h4_Matutino}}</p>
+							<p>10:30 - 11:15:{{m.h5_Matutino}}</p>
+							<p>11:15 - 12:00:{{m.h6_Matutino}}</p>
+			      		</div>
+
+			      		<div class="col s12 m4 center">
+			      			<h5>Tarde</h5>
+			      			<p>13:00 - 13:45: {{m.h1_Vespertino}}</p>
+							<p>13:45 - 14:30: {{m.h1_Vespertino}}</p>
+			      			<p>14:50 - 15:35: {{m.h1_Vespertino}}</p>
+							<p>15:35 - 16:20: {{m.h1_Vespertino}}</p>
+							<p>16:30 - 17:15: {{m.h1_Vespertino}}</p>
+							<p>17:15 - 18:00: {{m.h1_Vespertino}}</p>
+			      		</div>
+
+			      		<div class="col s12 m4 center">
+			      			<h5>Noite</h5>
+			      			<p>19:00 - 19:45:{{m.h1_Noturno}}</p>
+							<p>19:45 - 20:30:{{m.h2_Noturno}}</p>
+							<p>20:45 - 21:30:{{m.h3_Noturno}}</p>
+							<p>21:30 - 22:15:{{m.h4_Noturno}}</p>
+			      		</div>
+		    		</div>
+		    	</div>
+		    	<div class="modal-footer">	
+		    		<a href="{% url 'reservar_materiais' pk=m.id %}" class="modal-action modal-close waves-effect waves-green btn-flat" >Reservar</a>
+		  			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Fechar</a>
+	    		</div>
+	    	
+	    </div>
+			
+			
+		</tr>
+		
+		
+		
+		{% endfor %}
+	</tbody>
+
+</table>
+{% else %}
+	<h4>Nenhum material cadastrado</h4>
+{% endif %}
+
+<br/>
+<div>
+	{% if request.user.is_staff %}
+	<a href="{% url 'cadastrar_materiais' %}" class="waves-effect waves-light btn right">Cadastrar novo Material</a>
+	{% endif %}
+</div>
+
+<script type="text/javascript">$(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+ </script>
+{% endblock %}

@@ -1,0 +1,94 @@
+﻿{% load staticfiles %}
+{% load static %}
+<html>
+
+  <head>
+    <!--Import materialize.css-->
+    <title>Chavoso</title>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script   src="http://code.jquery.com/jquery-3.2.1.js"   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="   crossorigin="anonymous"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <link rel="icon" href="{% static 'imagens/chave.ico' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'imagens/chave.ico' %}" type="image/x-icon" />
+  </head>
+
+  <style type="text/css">
+    body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+  </style>
+
+
+  <body>
+    {% if request.user.is_authenticated %}
+    <nav class="orange darken-1 z-depth-0">
+     <div class="nav-fixed">
+      <ul>
+        <li>
+          <a href="#" data-activates="slide-out" id="button-collapse" class="left"><i class="large material-icons">menu</i></a>
+        </li>
+      </ul>
+      <a href="{% url 'inicio' %}" class="brand-logo left hide-on-med-and-down">Chavoso</a>
+     </div>
+    </nav>
+
+
+    
+      <ul id="slide-out" class="side-nav">
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img class="light-blue lighten-2 z-depth-0">
+            </div>
+            <a href="#!user"><i class="large material-icons">account_circle</i></a>
+            <a href="#!name"><span class="black-text name">{{request.user}}</span></a>
+          </div>
+        </li>
+        <li>
+          <a class="waves-effect" href="{% url 'inicio' %}">Início</a>
+        </li>
+        <li>
+          <a class="waves-effect" href="{% url 'listar_salas' %}">Salas</a>
+        </li>
+        <li>
+          <a class="waves-effect" href="{% url 'listar_materiais' %}">Materiais</a>
+        </li>
+        <li>
+          <a class="waves-effect" href="{% url 'materiais_reservados' %}">Reservas de material</a>
+        </li>
+        <li>
+          <a class="waves-effect" href="{% url 'salas_reservadas' %}">Reservas de sala</a>
+        </li>
+	<li>
+          <a class="waves-effect" href="{% url 'logout' %}">Sair</a>
+        </li>
+      </ul>
+{% endif %}
+<div class="container"><!--Import jQuery before materialize.js-->
+      {% block corpo %}
+
+      {% endblock %}
+    </div>
+
+
+  <script type="text/javascript">
+    $("#button-collapse").sideNav();
+    $(document).ready(function(){
+    $('select').material_select();
+  });
+  </script>
+
+
+
+</body>
+
+</html>
